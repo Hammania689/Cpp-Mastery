@@ -1,5 +1,6 @@
 file(REMOVE_RECURSE
   "CMakeFiles/C-Mastery.dir/main.cpp.obj"
+  "CMakeFiles/C-Mastery.dir/Maps.cpp.obj"
   "C-Mastery.pdb"
   "C-Mastery.exe"
   "C-Mastery.exe.manifest"

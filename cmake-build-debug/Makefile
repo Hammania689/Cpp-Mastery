@@ -47,10 +47,10 @@ RM = "D:\Program Files(x86) - data drive\apps\CLion\ch-0\172.3544.40\bin\cmake\b
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = "D:\Documents - data drive\Github\C-Mastery"
+CMAKE_SOURCE_DIR = "D:\Documents - data drive\Github\Cpp-Mastery"
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = "D:\Documents - data drive\Github\C-Mastery\cmake-build-debug"
+CMAKE_BINARY_DIR = "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug"
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -79,9 +79,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\C-Mastery\cmake-build-debug\CMakeFiles" "D:\Documents - data drive\Github\C-Mastery\cmake-build-debug\CMakeFiles\progress.marks"
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles\progress.marks"
 	$(MAKE) -f CMakeFiles\Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\C-Mastery\cmake-build-debug\CMakeFiles" 0
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" 0
 .PHONY : all
 
 # The main clean target
@@ -122,6 +122,33 @@ C-Mastery/fast:
 	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/build
 .PHONY : C-Mastery/fast
 
+Maps.obj: Maps.cpp.obj
+
+.PHONY : Maps.obj
+
+# target to build an object file
+Maps.cpp.obj:
+	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/Maps.cpp.obj
+.PHONY : Maps.cpp.obj
+
+Maps.i: Maps.cpp.i
+
+.PHONY : Maps.i
+
+# target to preprocess a source file
+Maps.cpp.i:
+	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/Maps.cpp.i
+.PHONY : Maps.cpp.i
+
+Maps.s: Maps.cpp.s
+
+.PHONY : Maps.s
+
+# target to generate assembly for a file
+Maps.cpp.s:
+	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/Maps.cpp.s
+.PHONY : Maps.cpp.s
+
 main.obj: main.cpp.obj
 
 .PHONY : main.obj
@@ -158,6 +185,9 @@ help:
 	@echo ... C-Mastery
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... Maps.obj
+	@echo ... Maps.i
+	@echo ... Maps.s
 	@echo ... main.obj
 	@echo ... main.i
 	@echo ... main.s

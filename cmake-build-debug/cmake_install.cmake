@@ -1,4 +1,4 @@
-# Install script for directory: D:/Documents - data drive/Github/C-Mastery
+# Install script for directory: D:/Documents - data drive/Github/Cpp-Mastery
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -35,5 +35,5 @@ endif()
 
 string(REPLACE ";" "\n" CMAKE_INSTALL_MANIFEST_CONTENT
        "${CMAKE_INSTALL_MANIFEST_FILES}")
-file(WRITE "D:/Documents - data drive/Github/C-Mastery/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
+file(WRITE "D:/Documents - data drive/Github/Cpp-Mastery/cmake-build-debug/${CMAKE_INSTALL_MANIFEST}"
      "${CMAKE_INSTALL_MANIFEST_CONTENT}")
