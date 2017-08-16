@@ -65,7 +65,7 @@ CMAKE_BINARY_DIR = "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-deb
 CMakeFiles/C-Mastery.dir/all:
 	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/depend
 	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" --progress-num=1,2,3 "Built target C-Mastery"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir="D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" --progress-num= "Built target C-Mastery"
 .PHONY : CMakeFiles/C-Mastery.dir/all
 
 # Include target in all.
@@ -75,7 +75,7 @@ all: CMakeFiles/C-Mastery.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/C-Mastery.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" 3
+	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" 0
 	$(MAKE) -f CMakeFiles\Makefile2 CMakeFiles/C-Mastery.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start "D:\Documents - data drive\Github\Cpp-Mastery\cmake-build-debug\CMakeFiles" 0
 .PHONY : CMakeFiles/C-Mastery.dir/rule

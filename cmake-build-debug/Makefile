@@ -122,60 +122,6 @@ C-Mastery/fast:
 	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/build
 .PHONY : C-Mastery/fast
 
-Maps.obj: Maps.cpp.obj
-
-.PHONY : Maps.obj
-
-# target to build an object file
-Maps.cpp.obj:
-	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/Maps.cpp.obj
-.PHONY : Maps.cpp.obj
-
-Maps.i: Maps.cpp.i
-
-.PHONY : Maps.i
-
-# target to preprocess a source file
-Maps.cpp.i:
-	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/Maps.cpp.i
-.PHONY : Maps.cpp.i
-
-Maps.s: Maps.cpp.s
-
-.PHONY : Maps.s
-
-# target to generate assembly for a file
-Maps.cpp.s:
-	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/Maps.cpp.s
-.PHONY : Maps.cpp.s
-
-main.obj: main.cpp.obj
-
-.PHONY : main.obj
-
-# target to build an object file
-main.cpp.obj:
-	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/main.cpp.obj
-.PHONY : main.cpp.obj
-
-main.i: main.cpp.i
-
-.PHONY : main.i
-
-# target to preprocess a source file
-main.cpp.i:
-	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/main.cpp.i
-.PHONY : main.cpp.i
-
-main.s: main.cpp.s
-
-.PHONY : main.s
-
-# target to generate assembly for a file
-main.cpp.s:
-	$(MAKE) -f CMakeFiles\C-Mastery.dir\build.make CMakeFiles/C-Mastery.dir/main.cpp.s
-.PHONY : main.cpp.s
-
 # Help Target
 help:
 	@echo The following are some of the valid targets for this Makefile:
@@ -185,12 +131,6 @@ help:
 	@echo ... C-Mastery
 	@echo ... edit_cache
 	@echo ... rebuild_cache
-	@echo ... Maps.obj
-	@echo ... Maps.i
-	@echo ... Maps.s
-	@echo ... main.obj
-	@echo ... main.i
-	@echo ... main.s
 .PHONY : help
 
 
