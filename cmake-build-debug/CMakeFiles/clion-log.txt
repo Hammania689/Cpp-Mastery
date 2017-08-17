@@ -1,15 +1,4 @@
 "D:\Program Files(x86) - data drive\apps\CLion\ch-0\172.3544.40\bin\cmake\bin\cmake.exe" -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - MinGW Makefiles" "D:\Documents - data drive\Github\Cpp-Mastery"
 -- Configuring done
-CMake Error at CMakeLists.txt:7 (add_executable):
-  Cannot find source file:
-
-    Maps.cpp
-
-  Tried extensions .c .C .c++ .cc .cpp .cxx .m .M .mm .h .hh .h++ .hm .hpp
-  .hxx .in .txx
-
-
-CMake Error: CMake can not determine linker language for target: C-Mastery
-CMake Error: Cannot determine link language for target "C-Mastery".
 -- Generating done
 -- Build files have been written to: D:/Documents - data drive/Github/Cpp-Mastery/cmake-build-debug

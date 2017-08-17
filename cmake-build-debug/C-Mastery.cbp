@@ -80,6 +80,9 @@
 				</MakeCommands>
 			</Target>
 		</Build>
+		<Unit filename="D:/Documents - data drive/Github/Cpp-Mastery/main.cpp">
+			<Option target="C-Mastery"/>
+		</Unit>
 		<Unit filename="D:/Documents - data drive/Github/Cpp-Mastery/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
