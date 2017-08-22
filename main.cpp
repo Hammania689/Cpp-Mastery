@@ -1,79 +1,79 @@
-#include <fstream>
-#include <iostream>
-#include <iomanip>
+/*
+ * Author : Hameed Abdul
+ * Date : Aug 22nd, 2017
+ * Purpose : To learn more about file formatting and raw data through the creation of a binary file
+ * Licence : The MIT License (MIT)
+ * University of Southern Mississippi, GulfPark Campus
+ */
 
+#include <iostream>
+#include <fstream>
+#include <cstring>
 using namespace std;
 
-// Use to calculate NetIncome after taxes and bonuses
-double NetIncome(double &, double &, double &);
+class Person {
+    char name[80];
+    int age;
+public:
+    // Default constructor
+    Person() {
+        strcpy(name, "No name");
+        age = 0;
+    }
 
-// Use to calculate Average Speed
-double AvgSpeed(double &d, double &h);
+    // Constructor takes in and sets values to parameters
+    Person(char *name, int age) {
+        strcpy(this->name, name);
+        this->age = age;
+    }
 
-// Use to calculate Gross Sales Amount
-double SalesAmt(double &, double &);
+    // Prints Object Data
+    void whoAreYou() {
+        cout << "Hi, I am " << name << " and I am "
+             << age << " years old" << endl;
+    }
+
+    void change() {
+        strcpy(name, "Papa Smurf");
+        age = 453;
+    }
+};
 
 int main()
 {
-    // File streams
-    ifstream inData("in.txt");
-    ofstream outData("test.txt");
+    // Default person
+    Person firstPerson((char *) "Hameed", 20);
 
-    // Variables all of which happen to be double besides the name
-    string name;
-    auto
-            gross = 0.00, bonus = 0.00,
-            taxes = 0.00, distance = 0.0,
-            hours = 0.0, cupsSold = 0.0,
-            costPerCup = 0.0, paycheck = 0.0,
-            avgSpeed = 0.0, salesAmt = 0.0;
+    // Initialized Binary File that reads, writes, and truncates in the event that a file
+    // with the same name already exists
+    fstream binFile("person.bin", ios::binary | ios::in | ios::out | ios::trunc);
 
-    // Accessing the input data
-    // Should be stored in a loop to have everything complete
-    getline(inData,name);
-    inData >> gross >> bonus >> taxes
-           >> distance >> hours >> cupsSold >> costPerCup;
+    // if the file can't be opened or read
+    if (!binFile)
+        cout << "Error while opening the file";
+    else {
+        // write the information of the first to the binary file
+        // Indicate that the file will beginning reading from the beginning of the file
+        binFile.write((char *) &firstPerson, sizeof(Person));
+        binFile.seekg(0);
 
-    // Store the function return values in categorical values
-    avgSpeed = AvgSpeed(distance,hours);
-    salesAmt = SalesAmt(cupsSold,costPerCup);
-    paycheck = NetIncome(gross, bonus, taxes);
+        // Create a second Person
+        Person secondPerson;
 
+        // Reads the binfile and copies the object data
+        // Proceeds to print and show that the copy was successful
+        binFile.read((char *) &secondPerson, sizeof(Person));
+        firstPerson.whoAreYou();
+        secondPerson.whoAreYou();
 
-    // If everything looks good then carry on and output the data
-    if(inData)
-    {
-            outData << "Name: " << name << endl;
-            outData << "Monthly Gross Salary: $" << gross
-                    << ", Monthly Bonus: " << bonus << "%, " << "Taxes: " << taxes <<"%" << endl;
-            outData << "NetIncome : $" << paycheck << endl << endl;
+        // Change the Contents of the first person
+        // Reprint object data
+        firstPerson.change();
+        firstPerson.whoAreYou();
+        secondPerson.whoAreYou();
 
-            outData << "Distance Traveled: " << distance << " miles, Traveling Time: " << hours
-                    << " hours" << endl << "Average Speed: " << avgSpeed << " miles per hour" << endl << endl;
-
-            outData << "Number of Coffee Cups Sold: " << cupsSold << ", Cost: $" << costPerCup << " per cup" << endl
-                    << "Sales Amount: $" << salesAmt << endl << endl;
+        // Safely close file
+        binFile.close();
     }
-    else // Ensure the read stream opened up correctly
-        outData << "Nothing to show.. Try Again \n";
-
-    // Safely close the files
-    inData.close();
-    outData.close();
     return 0;
 }
-
-double SalesAmt(double &sold, double &cupCost)
-{ return sold*cupCost;
-}
-
-double AvgSpeed(double &d, double &h)
-{
-    return d / h;
-}
-
-double NetIncome(double &g, double &b, double &t)
-{
-    return (((g * b / 100) + g) * ((100 - t) / 100));
-}
-

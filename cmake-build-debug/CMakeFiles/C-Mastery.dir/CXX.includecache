@@ -7,10 +7,10 @@
 #IncludeRegexTransform: 
 
 D:/Documents - data drive/Github/Cpp-Mastery/main.cpp
-fstream
--
 iostream
 -
-iomanip
+fstream
+-
+cstring
 -
 
