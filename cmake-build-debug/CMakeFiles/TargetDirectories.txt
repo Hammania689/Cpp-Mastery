@@ -1,3 +1,0 @@
-D:/Documents - data drive/Github/Cpp-Mastery/cmake-build-debug/CMakeFiles/C-Mastery.dir
-D:/Documents - data drive/Github/Cpp-Mastery/cmake-build-debug/CMakeFiles/edit_cache.dir
-D:/Documents - data drive/Github/Cpp-Mastery/cmake-build-debug/CMakeFiles/rebuild_cache.dir
