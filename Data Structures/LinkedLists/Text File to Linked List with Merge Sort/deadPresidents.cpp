@@ -16,12 +16,10 @@ int main()
     else
         LoadFileElementsToList(inputFile,potusList);
     
-    potusList.Print();
-    // cout << potusList.lengthOfList << endl << endl << endl;
-    
-    // President *t = potusList.PresidentAtIndex(16);
-    // cout << t->firstName << " " << t->lastName << endl;
-    
+    // potusList.MergeSort();
+    // ListOfPresidents *potusList2 = new ListOfPresidents;
+    // potusList2 = potusList2->DeepCopyList(potusList);
+
     // Safely close the file 
     inputFile.close();
     return 0;
