@@ -16,9 +16,8 @@ int main()
     else
         LoadFileElementsToList(inputFile,potusList);
     
-    // potusList.MergeSort();
-    // ListOfPresidents *potusList2 = new ListOfPresidents;
-    // potusList2 = potusList2->DeepCopyList(potusList);
+    cout << endl << endl;
+    potusList.MergeSort();
 
     // Safely close the file 
     inputFile.close();
