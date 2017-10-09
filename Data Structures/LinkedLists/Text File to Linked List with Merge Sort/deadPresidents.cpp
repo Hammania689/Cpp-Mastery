@@ -1,4 +1,4 @@
-#include "potusList.h"
+//#include "potusList.h"
 #include <fstream>
 #include <sstream>
 
@@ -7,20 +7,24 @@ void LoadFileElementsToList(fstream &,ListOfPresidents &);
 
 int main()
 {
-    ListOfPresidents potusList;
+    std::cout << " Hello ";
+/*    ListOfPresidents potusList;
     fstream inputFile;
     inputFile.open("nameAndAges.in");
 
-    if(!inputFile)
-        cout << "Failed to Open file. Double check your Directory path";
-    else
-        LoadFileElementsToList(inputFile,potusList);
+	if (!inputFile)
+		cout << "Failed to Open file. Double check your Directory path";
+	else
+		LoadFileElementsToList(inputFile,potusList);
     
     cout << endl << endl;
-    potusList.MergeSort();
+	//potusList.Print();
+	potusList.MergeSort();
 
     // Safely close the file 
     inputFile.close();
+	cin.ignore();
+	return 0;*/
     return 0;
 }
 
@@ -35,8 +39,8 @@ void LoadFileElementsToList(fstream &inputFile,ListOfPresidents &potusList)
         istringstream iss(line);
     
         if(!(iss >> lastName >> firstName >> age))
-            cout << "Failed to add " << iss << "\n";
-        else 
+            cout << "Failed to add "  << "\n";
+        else
             potusList.Append(lastName,firstName,age);
     }
 }

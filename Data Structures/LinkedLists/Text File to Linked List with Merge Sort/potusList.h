@@ -1,6 +1,7 @@
-// #pragma once
+#pragma once
 #include <iostream>
 #include <string>
+#include <cctype>
 
 using namespace std;
 
@@ -20,8 +21,8 @@ class President
       this->firstName = copy->firstName;
       this->lastName = copy->lastName;
   }
-    President() {this->next = NULL;}
-    ~President(){}
+  President() : age(0), next(nullptr) {}
+	~President(){}
 };
 
 class ListOfPresidents
@@ -30,62 +31,60 @@ class ListOfPresidents
     President *head;
 
     int lengthOfList;
-    
-    
 
-    void MergeSort()
-    {
-      
-      int half1 = 0;
-      int half2 = 0;
-      
-      if(lengthOfList % 2 == 0)
-      {
-        half1 = lengthOfList / 2;
-        half2 = lengthOfList / 2;
-      }
-      else
-      {
-        half1 = (lengthOfList / 2) + 1;
-        half2 = lengthOfList / 2;
-      }
-      
-      // Divide into two list
-      ListOfPresidents list1 = list1.DeepCopyList(this->PresidentAtIndex(30),this->PresidentAtIndex(35));
-      ListOfPresidents list2 = list2.DeepCopyList(this->PresidentAtIndex(half1 + 1),this->PresidentAtIndex(half1 + half2));
+	void MergeSort()
+	{
+		// Divide into two list
+		auto *list1 = new ListOfPresidents;
+		//ListOfPresidents *list2;
 
-      string last, first, test;
-      int age, minIndex;
+//		auto half1 = 0;
+//		auto half2 = 0;
+//
+//		if (lengthOfList % 2 == 0)
+//		{
+//			half1 = lengthOfList / 2;
+//			half2 = lengthOfList / 2;
+//		}
+//		else
+//		{
+//			half1 = (lengthOfList / 2) + 1;
+//			half2 = lengthOfList / 2;
+//		}
+
+		list1 = list1->DeepCopyList(this->PresidentAtIndex(30), this->PresidentAtIndex(35));
+		list1->Print();
+
+		cout << endl << endl;
+		auto minIndex = 0;
+		
+		//cout << list1->GetLengthOfList(list1->head) << endl;
 
 
-      list1.Print(); 
-      cout << endl << endl; 
+		for (auto i = 1; i < list1->GetLengthOfList(list1->head) + 1; i++)
+		{
+			auto currentIndex = list1->PresidentAtIndex(i)->lastName;
 
-      for(int i = 1; i < 7; i++)
-      {
-        last = list1.PresidentAtIndex(i)->lastName;
-        minIndex = i;
-        for(int j = (i + 1); j < 7; j++)
-        {
-          test = list1.PresidentAtIndex(j)->lastName;
-          // if last comes should come after test then swap
-          if(test <= last)
-            minIndex = j;
-        }
-        
-        list1.SwapTwoNodesInList(list1.PresidentAtIndex(i), list1.PresidentAtIndex(minIndex));
-      }
-      cout << "First alphabetically last name is " << list1.PresidentAtIndex(1)->lastName << endl;
+			cout << "Hex value for " << currentIndex << " : " << hex <<  (int) currentIndex[0] << endl;
+			for (auto j = (i + 1); j < list1->GetLengthOfList(list1->head);j++)
+			{
+				auto testIndex = list1->PresidentAtIndex(j)->lastName;
+				// if last comes should come after test then swap
+				if (testIndex.compare(currentIndex)  < 0)
+					minIndex = j;
+			}
+			if(minIndex != i)
+				list1->SwapTwoNodesInList(list1->PresidentAtIndex(i), list1->PresidentAtIndex(minIndex));
+		}
 
-      list1.Print();
-      
-      //CheckSubListContents(list1,list2);
-    }
+//		cout << "First alphabetically last name is " << list1->PresidentAtIndex(0)->lastName << endl;
+//		list1->Print();
+	}
     
     void SwapTwoNodesInList(President *node1, President *node2)
     {
-      President *tmp = new President;
-      tmp->CopyPresident(node1);
+      auto *tmp = new President;
+		tmp->CopyPresident(node1);
       node1->CopyPresident(node2);
       node2->CopyPresident(tmp);
     }
@@ -102,8 +101,8 @@ class ListOfPresidents
     void Append(string last,string first, int age)
     {
       // Instantiate the new Node
-      President *current = head;
-      President *queuedNode = new President;
+      auto *current = head;
+      auto *queuedNode = new President;
       
       // Add the passed in variables to the node
       queuedNode->firstName = first;
@@ -114,11 +113,11 @@ class ListOfPresidents
       // OR Iterate to the end of the list
       // then insert the node
       
-      if(head == NULL)
-      head = queuedNode;
+      if(head == nullptr)
+		head = queuedNode;
       else
       {
-        while(current->next != NULL)
+        while(current->next != nullptr)
         current = current->next;
         current->next = queuedNode;
       }
@@ -132,17 +131,17 @@ class ListOfPresidents
     void Append(President *existingNode)
     {
       // Instantiate the new Node
-      President *current = head;
+      auto *current = head;
       
       // Iterate to the begining of an empty list 
       // OR Iterate to the end of the list
       // then insert the node
       
-      if(head == NULL)
+      if(head == nullptr)
       head = existingNode;
       else
       {
-        while(current->next != NULL)
+        while(current->next != nullptr)
         current = current->next;
         current->next = existingNode;
       }
@@ -156,10 +155,10 @@ class ListOfPresidents
     void Print()
     {
       // Points to the head for travesal
-      President *current = head;
+      auto *current = head;
       lengthOfList = 0;
       // Iterates until the very last element
-      while (current != NULL)
+      while (current != nullptr)
       {
         // Prints data 
         // Goes to the next element
@@ -172,62 +171,63 @@ class ListOfPresidents
       
     // Duplicates a Deep Copy Instance of the List that doesn't point to the same adress
     // Use to Create Independent Instances(Deep Copy) of a list with prexisting data
-    ListOfPresidents DeepCopyList(President *startNode,President *endNode){
+    ListOfPresidents *DeepCopyList(President *startNode,President *endNode)
+	{
       // Create a new List ptr
       // Boolean flag to see stop loop if the list is at the endNode index
-      ListOfPresidents tmp;
-      bool sublistComplete = false;
+      auto *tmp = new ListOfPresidents;
+      auto sublistComplete = false;
       
       // Current Ptr points to the Original list's starting index
       // A new ptr that will hold an independent address 
-      President *current = startNode;
-      President *copy = new President;
+      auto *current = startNode;
+      auto *copy = new President;
       
       // Copies the data of head
       copy->firstName = current->firstName;
       copy->lastName = current->lastName;
       copy->age = current->age;
+
       // Doesn't Point to the next Node in the List
-      copy->next =  NULL;
+      copy->next =  nullptr;
       
       // Const Instance of the head for the new list 
       // Eletronic Insurance to ensure nothing gets altered
       // Sets the head of the new list
       // Increments the index accordingly
-      President *const newHead = copy;
-      tmp.head = newHead;
-      tmp.lengthOfList +=1;
+      auto *const newHead = copy;
+      tmp->head = newHead;
+      tmp->lengthOfList +=1;
       
       // We can only copy a list that isn't empty
       // So we've already have copied the header
       // Traverses to the next element
       current = current->next;
-
       
       // While current points to data that isn't NULL
-      while(current != NULL && sublistComplete != true)
-      {
-        // Rinse and repeat what we did before the loop
-        // Create a newly alloc ptr for the next node and Prepare to deep copy
-        copy = copy->next = new President;
-        
-        // Deep copy for each variable
-        copy->firstName = current->firstName;
-        copy->lastName = current->lastName;
-        copy->age = current->age;
-        copy->next =  NULL;
-        
-        // Increase the length
-        tmp.lengthOfList += 1;
-        
-        // If the current index is the specifed index to stop at then don't move on 
-        if(current == endNode)
-          sublistComplete = true;
-        // Otherwise move to the next node
-        else
-        current = current -> next;
-      }
-      
+      while(current != nullptr && sublistComplete != true)
+		{
+			// Rinse and repeat what we did before the loop
+			// Create a newly alloc ptr for the next node and Prepare to deep copy
+			copy = copy->next = new President;
+
+			// Deep copy for each variable
+			copy->firstName = current->firstName;
+			copy->lastName = current->lastName;
+			copy->age = current->age;
+			copy->next = nullptr;
+
+			// Increase the length
+			tmp->lengthOfList += 1;
+
+			// If the current index is the specifed index to stop at then don't move on 
+			if (current == endNode)
+				sublistComplete = true;
+			// Otherwise move to the next node
+			else
+				current = current->next;
+		}
+
       // Return the newly copied list
       return tmp;
     }
@@ -237,45 +237,38 @@ class ListOfPresidents
   // Finds the President at the index passed in
   // Use to find one president at a specific element index
   // WARNING RETURNS AN ELEMENT AND ALL OF THE SUBSEQUENT NODES
-  // typedef President* (*potusAI)(int);
-  President*  PresidentAtIndex (int index)
+	// INDEXED AT 0
+  President*  PresidentAtIndex (int index) const
   {
-    
-      President *current = head;
-      
-      // if(index > lengthOfList)
-      // {
-        //   cout << "Invalid element index of the list";
-        //   return NULL;
-        // } 
-        for(int i = 1; i < index;i++)
-        current = current->next;
-        // WARNING RETURNS INDEXED ELEMENT AND ALL OF THE SUBSEQUENT NODEs
-        return current;
-    }
-
-    // potusAI x = PresidentAtIndex;
-        
-        
+	  auto *current = head;
+      if(index > lengthOfList)
+	  {
+		  cout << "Invalid element index of the list";
+		  return nullptr;
+	  }
+	  for (auto i = 1; i < index; i++)
+		  current = current->next;
+	  // WARNING RETURNS INDEXED ELEMENT AND ALL OF THE SUBSEQUENT NODEs
+	  return current;
+  }
         
     int GetLengthOfList(President *H)
     {
       // Points to the head for travesal
-      President *current = H;
+      auto *current = H;
       lengthOfList = 0;
       // Iterates until the very last element
-      while (current != NULL)
+      while (current != nullptr)
       {
         lengthOfList += 1;
         current = current->next;
       }
+	    return lengthOfList;
     }
-
     
-    
-    ListOfPresidents(){ head = NULL; lengthOfList = 0;}
+    ListOfPresidents(){ head = nullptr; lengthOfList = 0;}
     ~ListOfPresidents(){
-      while (head != NULL)
+      while (head != nullptr)
       {
           President *tmpNode = head->next;
           delete head;
