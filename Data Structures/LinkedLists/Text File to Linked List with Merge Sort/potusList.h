@@ -13,14 +13,6 @@ class President
     string lastName;
     President *next;
 
-    // Use to copy a Single President object to another
-    // Does not copy the parameter objects next ptr
-  void CopyPresident(President *copy)
-  {
-      this->age = copy->age;
-      this->firstName = copy->firstName;
-      this->lastName = copy->lastName;
-  }
   President() : age(0), next(nullptr) {}
 	~President(){}
 };
@@ -52,7 +44,7 @@ class ListOfPresidents
 //			half2 = lengthOfList / 2;
 //		}
 
-		list1 = list1->DeepCopyList(this->PresidentAtIndex(30), this->PresidentAtIndex(35));
+		list1 = list1->DeepCopyList(this->PresidentAtIndex(head,30), this->PresidentAtIndex(head,35));
 		list1->Print();
 
 		cout << endl << endl;
@@ -60,34 +52,54 @@ class ListOfPresidents
 		
 		//cout << list1->GetLengthOfList(list1->head) << endl;
 
-
-		for (auto i = 1; i < list1->GetLengthOfList(list1->head) + 1; i++)
+		for (auto i = 0; i < list1->GetLengthOfList(list1->head); ++i)
 		{
-			auto currentIndex = list1->PresidentAtIndex(i)->lastName;
-
-			cout << "Hex value for " << currentIndex << " : " << hex <<  (int) currentIndex[0] << endl;
-			for (auto j = (i + 1); j < list1->GetLengthOfList(list1->head);j++)
+			auto age = list1->PresidentAtIndex(list1->head,i)->age;
+			auto currentIndex = list1->PresidentAtIndex(list1->head,i)->lastName;
+			cout << currentIndex << " " << i << endl;
+			
+			minIndex = i;
+			for (auto j = (i + 1); j < list1->GetLengthOfList(list1->head);++j)
 			{
-				auto testIndex = list1->PresidentAtIndex(j)->lastName;
-				// if last comes should come after test then swap
-				if (testIndex.compare(currentIndex)  < 0)
+				auto testAge = list1->PresidentAtIndex(list1->head,j)->age;
+				if (testAge < age && list1->PresidentAtIndex(list1->head,minIndex)->age > testAge)
+				{
 					minIndex = j;
+				}
 			}
+
 			if(minIndex != i)
-				list1->SwapTwoNodesInList(list1->PresidentAtIndex(i), list1->PresidentAtIndex(minIndex));
+				list1->SwapTwoElementsInList(list1->head,minIndex,i);
 		}
 
 //		cout << "First alphabetically last name is " << list1->PresidentAtIndex(0)->lastName << endl;
-//		list1->Print();
+		cout << endl << endl;
+		list1->Print();
 	}
     
-    void SwapTwoNodesInList(President *node1, President *node2)
+    void SwapTwoElementsInList(President *listHead, int n, int m)
     {
-      auto *tmp = new President;
-		tmp->CopyPresident(node1);
-      node1->CopyPresident(node2);
-      node2->CopyPresident(tmp);
-    }
+		auto *node1 = listHead;
+		auto *node2 = listHead;
+
+		for (auto i = 0; i < n; i++)
+			node1 = node1->next;
+
+		for (auto j = 0; j < m; j++)
+			node2 = node2->next;
+
+		auto tempLast = node1->lastName;
+		auto tempFirst = node1->firstName;
+		auto tempAge = node1->age;
+
+		node1->lastName = node2->lastName;
+		node1->firstName = node2->firstName;
+		node1->age = node2->age;
+
+		node2->lastName = tempLast;
+		node2->firstName = tempFirst;
+		node2->age = tempAge;
+	}
 
     // Use to visualize the elements in each sublist 
     void CheckSubListContents(ListOfPresidents *list1, ListOfPresidents *list2){
@@ -237,19 +249,22 @@ class ListOfPresidents
   // Finds the President at the index passed in
   // Use to find one president at a specific element index
   // WARNING RETURNS AN ELEMENT AND ALL OF THE SUBSEQUENT NODES
-	// INDEXED AT 0
-  President*  PresidentAtIndex (int index) const
+  President*  PresidentAtIndex (President * currHead,int index) const
   {
-	  auto *current = head;
-      if(index > lengthOfList)
+
+	  auto *current = currHead;
+	  int count = 0; /* the index of the node we're currently
+					 looking at */
+	  while (current != NULL)
 	  {
-		  cout << "Invalid element index of the list";
-		  return nullptr;
-	  }
-	  for (auto i = 1; i < index; i++)
+		  if (count == index)
+			  return current;
+		  count++;
 		  current = current->next;
-	  // WARNING RETURNS INDEXED ELEMENT AND ALL OF THE SUBSEQUENT NODEs
-	  return current;
+	  }
+
+	 cout << "Invalid element index of the list";
+	return nullptr;
   }
         
     int GetLengthOfList(President *H)

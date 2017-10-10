@@ -1,4 +1,4 @@
-//#include "potusList.h"
+#include "potusList.h"
 #include <fstream>
 #include <sstream>
 
@@ -7,8 +7,7 @@ void LoadFileElementsToList(fstream &,ListOfPresidents &);
 
 int main()
 {
-    std::cout << " Hello ";
-/*    ListOfPresidents potusList;
+	ListOfPresidents potusList;
     fstream inputFile;
     inputFile.open("nameAndAges.in");
 
@@ -24,8 +23,7 @@ int main()
     // Safely close the file 
     inputFile.close();
 	cin.ignore();
-	return 0;*/
-    return 0;
+	return 0;
 }
 
 // Use to fill POTUS list with data from each line of the file passed in
