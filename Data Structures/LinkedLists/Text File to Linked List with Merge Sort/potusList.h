@@ -26,57 +26,104 @@ class ListOfPresidents
 
 	void MergeSort()
 	{
-		// Divide into two list
+		// 1) Divide into two list
 		auto *list1 = new ListOfPresidents;
-		//ListOfPresidents *list2;
+		auto *list2 = new ListOfPresidents;
 
-//		auto half1 = 0;
-//		auto half2 = 0;
-//
-//		if (lengthOfList % 2 == 0)
-//		{
-//			half1 = lengthOfList / 2;
-//			half2 = lengthOfList / 2;
-//		}
-//		else
-//		{
-//			half1 = (lengthOfList / 2) + 1;
-//			half2 = lengthOfList / 2;
-//		}
+		auto half1 = 0;
+		auto half2 = 0;
 
-		list1 = list1->DeepCopyList(this->PresidentAtIndex(head,30), this->PresidentAtIndex(head,35));
-		list1->Print();
-
-		cout << endl << endl;
-		auto minIndex = 0;
-		
-		//cout << list1->GetLengthOfList(list1->head) << endl;
-
-		for (auto i = 0; i < list1->GetLengthOfList(list1->head); ++i)
+		if (lengthOfList % 2 == 0)
+			half1 = half2 = lengthOfList / 2;
+		else
 		{
-			auto age = list1->PresidentAtIndex(list1->head,i)->age;
-			auto currentIndex = list1->PresidentAtIndex(list1->head,i)->lastName;
-			cout << currentIndex << " " << i << endl;
-			
-			minIndex = i;
-			for (auto j = (i + 1); j < list1->GetLengthOfList(list1->head);++j)
+			half1 = (lengthOfList / 2) + 1;
+			half2 = lengthOfList / 2;
+		}
+
+		list1 = list1->DeepCopyList(this->PresidentAtIndex(head,0), this->PresidentAtIndex(head,half1));
+		list2 = list2->DeepCopyList(this->PresidentAtIndex(head, (half1 + 1)), this->PresidentAtIndex(head, half2));
+
+		// 2) Selective Sort the list
+		list1->SelectionSort(list1);
+
+		list1->Print();
+		list2->SelectionSort(list2);
+
+		CheckSubListContents(list1,list2);
+	}
+    
+
+	void  SelectionSort(ListOfPresidents *listToSort)
+	{
+		
+		for (auto i = 0; i < listToSort->GetLengthOfList(listToSort->head); i++)
+		{
+			// Variables to store the current element's data
+			auto currentPres = listToSort->PresidentAtIndex(listToSort->head, i);
+
+			auto currentLast = currentPres->lastName;
+			auto currentFirst = currentPres->firstName;
+			auto currentAge = currentPres->age;
+
+			// Assume that the current index is the smallest in the list
+			auto minIndex = i;
+
+			// Nested for loop to check the check against other indexes in the list(Starting from after the current index)
+			for (auto j = (i + 1); j < listToSort->GetLengthOfList(listToSort->head); j++)
 			{
-				auto testAge = list1->PresidentAtIndex(list1->head,j)->age;
-				if (testAge < age && list1->PresidentAtIndex(list1->head,minIndex)->age > testAge)
+
+				auto testPres = listToSort->PresidentAtIndex(listToSort->head, j);
+				auto minCurrentPres = listToSort->PresidentAtIndex(listToSort->head, minIndex);
+
+				auto testLast = testPres->lastName;
+				auto testFirst = testPres->firstName;
+				auto testAge = testPres->age;
+
+				// if the test age is less than the current index's age
+				// AND  if the test age is less than the current minIndex
+				// This finds the absolute lowest value in the list and ensure it will not be change by a "local minima"
+				//if (testAge < age && listToSort->PresidentAtIndex(listToSort->head, minIndex)->age > testAge)
+				if (testLast.compare(currentLast) <= 0)
 				{
-					minIndex = j;
+					if (testLast.compare(minCurrentPres->lastName) == 0)
+					{
+						//// test the first
+						if (testFirst.compare(minCurrentPres->firstName) == 0)
+						{
+							/*if (testAge == minCurrentPres->age)
+								cout << "We have two " << testLast << endl << endl << endl << endl;*/
+							if(minCurrentPres->age > testAge)
+								minIndex = j;
+						}
+						else if (minCurrentPres->firstName > testFirst)
+							minIndex = j;
+					}
+					else if(minCurrentPres->lastName > testLast)
+						minIndex = j;
 				}
 			}
 
-			if(minIndex != i)
-				list1->SwapTwoElementsInList(list1->head,minIndex,i);
+			// If i isn't the lowest value then change the list
+			if (minIndex != i)
+				listToSort->SwapTwoElementsInList(listToSort->head, minIndex, i);
 		}
-
-//		cout << "First alphabetically last name is " << list1->PresidentAtIndex(0)->lastName << endl;
-		cout << endl << endl;
-		list1->Print();
 	}
-    
+
+
+	void DeletePotusAtIndex(President *currHead,int index)
+	{
+		auto *current = currHead;
+		int count = 0; /* the index of the node we're currently
+					   looking at */
+		while (current != NULL)
+		{
+			if (count == index)
+			count++;
+			current = current->next;
+		}
+	}
+
     void SwapTwoElementsInList(President *listHead, int n, int m)
     {
 		auto *node1 = listHead;
@@ -244,28 +291,25 @@ class ListOfPresidents
       return tmp;
     }
 
-  // We can only copy a list that isn't empty
-  // So we've already have copied the header
-  // Finds the President at the index passed in
-  // Use to find one president at a specific element index
-  // WARNING RETURNS AN ELEMENT AND ALL OF THE SUBSEQUENT NODES
-  President*  PresidentAtIndex (President * currHead,int index) const
-  {
-
-	  auto *current = currHead;
-	  int count = 0; /* the index of the node we're currently
-					 looking at */
-	  while (current != NULL)
-	  {
-		  if (count == index)
-			  return current;
-		  count++;
-		  current = current->next;
-	  }
-
-	 cout << "Invalid element index of the list";
+	// We can only copy a list that isn't empty
+	// So we've already have copied the header
+	// Finds the President at the index passed in
+	// Use to find one president at a specific element index
+	// WARNING RETURNS AN ELEMENT AND ALL OF THE SUBSEQUENT NODES
+	President*  PresidentAtIndex (President * currHead,int index) const
+	{
+		auto *current = currHead;
+		int count = 0; /* the index of the node we're currently
+						looking at */
+		while (current != NULL)
+		{
+			if (count == index)
+				return current;
+			count++;
+			current = current->next;
+		}
 	return nullptr;
-  }
+	}
         
     int GetLengthOfList(President *H)
     {

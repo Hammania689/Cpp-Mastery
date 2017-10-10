@@ -17,7 +17,6 @@ int main()
 		LoadFileElementsToList(inputFile,potusList);
     
     cout << endl << endl;
-	//potusList.Print();
 	potusList.MergeSort();
 
     // Safely close the file 
