@@ -13,6 +13,13 @@ class President
     string lastName;
     President *next;
 
+	void CopyPresident(President *potusToCopy)
+	{
+		this->firstName = potusToCopy->firstName;
+		this->lastName = potusToCopy->lastName;
+		this->age = potusToCopy->age;
+	}
+
   President() : age(0), next(nullptr) {}
 	~President(){}
 };
@@ -22,10 +29,13 @@ class ListOfPresidents
   public:
     President *head;
 
+	
+
     int lengthOfList;
 
 	void MergeSort()
 	{
+
 		// 1) Divide into two list
 		auto *list1 = new ListOfPresidents;
 		auto *list2 = new ListOfPresidents;
@@ -47,33 +57,69 @@ class ListOfPresidents
 		// 2) Selective Sort the list
 		list1->SelectionSort(list1);
 		list2->SelectionSort(list2);
-
 		//CheckSubListContents(list1,list2);
 
-		// 3) Merge the sorted lists into the Original list in order
-		
-	}
-    
-	// Use to put two sorted sublist back into the original list in ascending Last, First, then Age format
-	ListOfPresidents * TwoFingerAlgorithm(ListOfPresidents *list1, ListOfPresidents *list2) 
-	{
-		auto OrderedList = new ListOfPresidents;
 
+		// 3) Merge the sorted lists into the Original list in order
+		this->TwoFingerAlgorithm(list1, list2);
+
+		list1->EmptyPassedInList(list1);
+		list1->EmptyPassedInList(list2);
+		//CheckSubListContents(list1,list2);
+
+		delete list1, list2;
+	}
+
+	// Use to put two sorted sublist back into the original list in ascending Last, First, then Age format
+	void TwoFingerAlgorithm(ListOfPresidents *list1, ListOfPresidents *list2) 
+	{
+
+		// Current and Max index for the new list
 		auto newLength = list1->GetLengthOfList(list1->head) + list2->GetLengthOfList(list2->head);
 		auto count = 0;
 		
-		while (count < newLength)
+		// Indexes of the two list
+		auto index1 = 0;
+		auto index2 = 0;
+
+		// Empty the current list 
+		this->EmptyPassedInList(this);
+
+		// Until the List is full
+		while (count < ( newLength- 1))
 		{
 			auto queuedPotus = new President;
-			auto list1Potus = list1->PresidentAtIndex(list1->head,count);
-			auto list2Potus = list2->PresidentAtIndex(list2->head,count);
-
-			//if (list1Potus->lastName.compare(list2Potus->lastName))
+			auto potus1 = list1->PresidentAtIndex(list1->head,index1);
+			auto potus2 = list2->PresidentAtIndex(list2->head, index2);
 			
-				
-		}
+			if (potus1->lastName.compare(potus2->lastName) < 0)
+			{
+				queuedPotus->CopyPresident(potus1);
+				index1++;
 
-		return OrderedList;
+				this->Append(queuedPotus);
+			}
+			else
+			{
+				queuedPotus->CopyPresident(potus2);
+				index2++;
+
+				this->Append(queuedPotus);
+			}
+			
+			count++;
+		}
+	}
+
+	// Use to empty the CURRENT list
+	void EmptyPassedInList(ListOfPresidents *subList)
+	{
+		while (subList->head != nullptr)
+		{
+			auto temp = subList->head->next;
+			delete subList->head;
+			subList->head = temp;
+		}
 	}
 
 	// Use to sort sublist in by alphabetically order in the Last, First, then Age format

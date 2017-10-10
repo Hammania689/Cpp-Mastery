@@ -8,17 +8,23 @@ void LoadFileElementsToList(fstream &,ListOfPresidents &);
 int main()
 {
 	ListOfPresidents potusList;
-    fstream inputFile;
-    inputFile.open("nameAndAges.in");
+    fstream inputFile, deleteParamFile;
+    
+	inputFile.open("nameAndAges.in");
+	deleteParamFile.open("deleteThese.in");
 
 	if (!inputFile)
-		cout << "Failed to Open file. Double check your Directory path";
+		cout << "Failed to Open file. Double check your Directory path for the Names and Ages file...";
 	else
 		LoadFileElementsToList(inputFile,potusList);
-    
-    cout << endl << endl;
+
 	potusList.MergeSort();
 
+
+	if (!deleteParamFile)
+		cout << "Failed to Open file. Double check your Directory path for the Delete These file..";
+	else
+		cout << "The file is open and ready to be read. Delete the potus with function here";
     // Safely close the file 
     inputFile.close();
 	cin.ignore();
