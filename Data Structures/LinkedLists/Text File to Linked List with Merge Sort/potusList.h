@@ -123,7 +123,7 @@ class ListOfPresidents
 	}
 
 	// Use to sort sublist in by alphabetically order in the Last, First, then Age format
-	void  SelectionSort(ListOfPresidents *listToSort)
+	void SelectionSort(ListOfPresidents *listToSort)
 	{
 		
 		for (auto i = 0; i < listToSort->GetLengthOfList(listToSort->head); i++)
@@ -210,6 +210,7 @@ class ListOfPresidents
             cout << endl << endl;
             list2->Print();
     }
+
     // Appends a node at the end of a occupied OR The head of an empty linked list
     // Use to add a single element to the list
     void Append(string last,string first, int age)
@@ -264,10 +265,47 @@ class ListOfPresidents
       lengthOfList += 1;
     }
     
-    // Prints the contents of the List
+	void DeletePotus(string last, string first, int age)
+	{
+		auto index = 0;
+		auto foundNode = false;
+
+		while (index < (this->GetLengthOfList(this->head)) && foundNode == false)
+		{
+			auto queuedNode = PresidentAtIndex(this->head,index);
+		
+			if (queuedNode->lastName == last && queuedNode->firstName == first && queuedNode->age == age)
+			{
+				auto previousNode = PresidentAtIndex(this->head, index - 1);
+				auto nextNode = PresidentAtIndex(this->head, index + 1);
+
+				if (queuedNode == head)
+					head = nextNode;
+				else
+					previousNode->next = nextNode;
+
+
+				cout << "Deleted Potus: " << queuedNode->lastName + " " + queuedNode->firstName << " " << queuedNode->age << endl;
+				queuedNode->next = nullptr;
+				free(queuedNode);
+				foundNode = true;
+			}
+			index++;
+		}
+
+		if (foundNode != true)
+			cout << "The Potus Query for " << last + " " + first + " " << age << " failed." << 
+			" It does not exist in the list"<< endl;
+		else
+		// Update index
+			lengthOfList -= 1;
+	}
+    
+	// Prints the contents of the List
     // Use to display every element of the list
     void Print()
     {
+		cout << endl << endl;
       // Points to the head for travesal
       auto *current = head;
       lengthOfList = 0;
@@ -281,6 +319,8 @@ class ListOfPresidents
         lengthOfList += 1;
         current = current->next;
       }
+	  if (lengthOfList == 0)
+		  cout << "The current list is empty" << endl;
     }
       
     // Duplicates a Deep Copy Instance of the List that doesn't point to the same adress
