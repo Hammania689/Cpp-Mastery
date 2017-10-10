@@ -46,14 +46,37 @@ class ListOfPresidents
 
 		// 2) Selective Sort the list
 		list1->SelectionSort(list1);
-
-		list1->Print();
 		list2->SelectionSort(list2);
 
-		CheckSubListContents(list1,list2);
+		//CheckSubListContents(list1,list2);
+
+		// 3) Merge the sorted lists into the Original list in order
+		
 	}
     
+	// Use to put two sorted sublist back into the original list in ascending Last, First, then Age format
+	ListOfPresidents * TwoFingerAlgorithm(ListOfPresidents *list1, ListOfPresidents *list2) 
+	{
+		auto OrderedList = new ListOfPresidents;
 
+		auto newLength = list1->GetLengthOfList(list1->head) + list2->GetLengthOfList(list2->head);
+		auto count = 0;
+		
+		while (count < newLength)
+		{
+			auto queuedPotus = new President;
+			auto list1Potus = list1->PresidentAtIndex(list1->head,count);
+			auto list2Potus = list2->PresidentAtIndex(list2->head,count);
+
+			//if (list1Potus->lastName.compare(list2Potus->lastName))
+			
+				
+		}
+
+		return OrderedList;
+	}
+
+	// Use to sort sublist in by alphabetically order in the Last, First, then Age format
 	void  SelectionSort(ListOfPresidents *listToSort)
 	{
 		
@@ -107,20 +130,6 @@ class ListOfPresidents
 			// If i isn't the lowest value then change the list
 			if (minIndex != i)
 				listToSort->SwapTwoElementsInList(listToSort->head, minIndex, i);
-		}
-	}
-
-
-	void DeletePotusAtIndex(President *currHead,int index)
-	{
-		auto *current = currHead;
-		int count = 0; /* the index of the node we're currently
-					   looking at */
-		while (current != NULL)
-		{
-			if (count == index)
-			count++;
-			current = current->next;
 		}
 	}
 
