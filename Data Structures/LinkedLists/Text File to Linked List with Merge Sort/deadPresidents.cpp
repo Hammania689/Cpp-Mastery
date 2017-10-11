@@ -8,37 +8,45 @@ void LoadFileElementsToList(fstream &,ListOfPresidents &);
 // Read File line by line and deletes ONLY complete entries that exist in the list
 void DeletePotusElements(fstream &, ListOfPresidents &);
 
-int main()
+int main(int argc, char *argv[])
 {
 	auto potusList = ListOfPresidents();
 	auto inputFile = fstream();
 	auto deleteParamFile = fstream();
     
-	inputFile.open("nameAndAges.in");
-	deleteParamFile.open("deleteThese.in");
-
-	if (!inputFile & !deleteParamFile)
-	{
-		cout << "Failed to Open file. Double check your Directory path for the two files...";
-		return 1;
-	}
+	///*inputFile.open("nameAndAges.in");
+	//deleteParamFile.open("deleteThese.in");*/
+	
+	if (argc != 3)
+		cout << "Error; Usage: " << argv[0] << argv[1] << argv[2] << " <filename> \n";
 	else
 	{
-		// Read through File and Append them to the linked list
-		LoadFileElementsToList(inputFile,potusList);
-		potusList.Print();
+		inputFile.open(argv[1]);
+		deleteParamFile.open(argv[2]);
+	
+		if (!inputFile & !deleteParamFile)
+		{
+			cout << "Failed to Open file. Double check your Directory path for the two files...";
+			return 1;
+		}
+		else
+		{
+			// Read through File and Append them to the linked list
+			LoadFileElementsToList(inputFile,potusList);
+			potusList.Print();
 
-		// Sort through all the entries efficiently with Merge Sort
-		potusList.MergeSort();
-		potusList.Print();
+			// Sort through all the entries efficiently with Merge Sort
+			potusList.MergeSort();
+			potusList.Print();
 
-		// Delete elements that are specified in the delete Param file
-		DeletePotusElements(deleteParamFile, potusList);
-		potusList.Print();
+			// Delete elements that are specified in the delete Param file
+			DeletePotusElements(deleteParamFile, potusList);
+			potusList.Print();
 
-		// Empty the List
-		potusList.EmptyPassedInList(&potusList);
-		potusList.Print();
+			// Empty the List
+			potusList.EmptyPassedInList(&potusList);
+			potusList.Print();
+		}
 	}
 
     // Safely close the files
@@ -64,10 +72,13 @@ void LoadFileElementsToList(fstream &inputFile,ListOfPresidents &potusList)
     
 		if (!(iss >> lastName >> firstName >> age))
 		{
-            cout << "Failed to add contents : \"" << line << "\" at line " << lineCount << "\n";
+			if (line != "")
+				cout << "Failed to add contents : \"" << line << "\" at line " << lineCount << ". Not a complete record." <<" \n";
 		}
-        else
-            potusList.Append(lastName,firstName,age);
+		else if (potusList.PotusExistInList(lastName, firstName, age))
+				cout << "Duplicate. Potus \"" + lastName + " " + firstName << " " << age << "\" already exist." << endl;
+			else 
+				potusList.Append(lastName, firstName, age);
 
 		lineCount++;
     }

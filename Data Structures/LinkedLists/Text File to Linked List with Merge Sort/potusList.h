@@ -28,10 +28,8 @@ class ListOfPresidents
 {
   public:
     President *head;
-
-	
-
     int lengthOfList;
+
 
 	void MergeSort()
 	{
@@ -323,6 +321,22 @@ class ListOfPresidents
 		  cout << "The current list is empty" << endl;
     }
       
+	bool PotusExistInList(string last, string first, int age)
+	{
+		auto index = 0;
+		auto foundNode = false;
+
+		while (index < (this->GetLengthOfList(this->head)) && foundNode == false)
+		{
+			auto queuedNode = PresidentAtIndex(this->head, index);
+
+			if (queuedNode->lastName == last && queuedNode->firstName == first && queuedNode->age == age)
+				foundNode = true;
+			index++;
+		}
+
+		return foundNode;
+	}
     // Duplicates a Deep Copy Instance of the List that doesn't point to the same adress
     // Use to Create Independent Instances(Deep Copy) of a list with prexisting data
     ListOfPresidents *DeepCopyList(President *startNode,President *endNode)
