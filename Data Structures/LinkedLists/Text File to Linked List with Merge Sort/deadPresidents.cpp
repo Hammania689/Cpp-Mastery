@@ -5,38 +5,107 @@
 // Reads File line by line and adds ONLY complete entries to the list
 void LoadFileElementsToList(fstream &,ListOfPresidents &);
 
-int main()
+// Read File line by line and deletes ONLY complete entries that exist in the list
+void DeletePotusElements(fstream &, ListOfPresidents &);
+
+int main(int argc, char *argv[])
 {
-    ListOfPresidents potusList;
-    fstream inputFile;
-    inputFile.open("nameAndAges.in");
-
-    if(!inputFile)
-        cout << "Failed to Open file. Double check your Directory path";
-    else
-        LoadFileElementsToList(inputFile,potusList);
+	auto potusList = ListOfPresidents();
+	auto inputFile = fstream();
+	auto deleteParamFile = fstream();
     
-    cout << endl << endl;
-    potusList.MergeSort();
+	///*inputFile.open("nameAndAges.in");
+	//deleteParamFile.open("deleteThese.in");*/
+	
+	if (argc != 3)
+		cout << "Error; Usage: " << argv[0] << argv[1] << argv[2] << " <filename> \n";
+	else
+	{
+		inputFile.open(argv[1]);
+		deleteParamFile.open(argv[2]);
+	
+		if (!inputFile & !deleteParamFile)
+		{
+			cout << "Failed to Open file. Double check your Directory path for the two files...";
+			return 1;
+		}
+		else
+		{
+			// Read through File and Append them to the linked list
+			LoadFileElementsToList(inputFile,potusList);
+			potusList.Print();
 
-    // Safely close the file 
+			// Sort through all the entries efficiently with Merge Sort
+			potusList.MergeSort();
+			potusList.Print();
+
+			// Delete elements that are specified in the delete Param file
+			DeletePotusElements(deleteParamFile, potusList);
+			potusList.Print();
+
+			// Empty the List
+			potusList.EmptyPassedInList(&potusList);
+			potusList.Print();
+		}
+	}
+
+    // Safely close the files
     inputFile.close();
-    return 0;
+	deleteParamFile.close();
+	cin.ignore();
+	return 0;
 }
 
 // Use to fill POTUS list with data from each line of the file passed in
 void LoadFileElementsToList(fstream &inputFile,ListOfPresidents &potusList)
 {
-    string line,firstName,lastName;
-    int age;
+	cout << endl << endl;
+	auto line = string(),
+		lastName = string(),
+		firstName = string();
+	auto age = 0;
+	auto lineCount = 0;
 
     while(getline(inputFile,line))
     {
         istringstream iss(line);
     
-        if(!(iss >> lastName >> firstName >> age))
-            cout << "Failed to add " << iss << "\n";
-        else 
-            potusList.Append(lastName,firstName,age);
+		if (!(iss >> lastName >> firstName >> age))
+		{
+			if (line != "")
+				cout << "Failed to add contents : \"" << line << "\" at line " << lineCount << ". Not a complete record." <<" \n";
+		}
+		else if (potusList.PotusExistInList(lastName, firstName, age))
+				cout << "Duplicate. Potus \"" + lastName + " " + firstName << " " << age << "\" already exist." << endl;
+			else 
+				potusList.Append(lastName, firstName, age);
+
+		lineCount++;
     }
+}
+
+// Use to delete POTUS elements by queried data in the the passed in file
+// Element data must be present in both Potus List and Delete File passed in
+void DeletePotusElements(fstream &deleteParamFile, ListOfPresidents &potusList)
+{
+	cout << endl << endl;
+	auto line = string(),
+	lastName = string(),
+	firstName = string();
+
+	auto age = 0;
+	auto lineCount = 0;
+
+
+	while (getline(deleteParamFile, line))
+	{
+		auto iss = istringstream(line);
+		if (!(iss >> lastName >> firstName >> age))
+			cout << "Failed to delete query contents : \"" << line << "\" at line number " << lineCount << "\n";
+		else
+			potusList.DeletePotus(lastName, firstName, age);
+
+		lineCount++;
+	}
+	cout << endl << endl;
 }

@@ -21,7 +21,7 @@ int HighestSum();
 
 // Global variables ... For Now
 vector<int> sums;
-vector<vector<int>> arr(6, vector<int>(6));
+vector< vector<int> > arr(6, vector<int>(6));
 
 // For Testing
 const int defaultValues[] =

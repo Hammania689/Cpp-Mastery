@@ -65,7 +65,7 @@ int main(int argc, char *argv[]) {
                 if (temp != 0) {
                     ptr = move(ReadRecord(dataFile, numOfRecs, temp));
                     textFile << "Temp: ";
-                    fstream newBin(to_string(temp) + ".bin", ios::binary | ios::out);
+                    fstream newBin("temp.bin", ios::binary | ios::out);
                     cout << endl << endl << "Temperature : \n";
                     if (newBin.fail()) {
                         return 2;
@@ -109,7 +109,7 @@ int main(int argc, char *argv[]) {
 
     //CheckSmartPointerData(ptr, numOfRecs);
     textFile.close();
-
+    cin.get();
     return 0;
 }
 
