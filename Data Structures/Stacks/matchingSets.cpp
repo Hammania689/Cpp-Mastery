@@ -2,48 +2,48 @@
 #include "fstream"
 
 
+// Use to determine whether are not two chars belong to the same pair 
 bool ArePairs(char openingChar,char closingChar);
 
 int main()
 {
+
     PairNodeStack stackTest;
-    // fstream fileToCheck;
+    fstream fileToCheck;
     
     // fileToCheck(argc[1]);
     
-    // Read Text and find the first (, {, [, /* 
     
-    string test = "{(d((((})";
-        
-    char currentChar = 0;
+    auto test = string("{[//]}");
+    auto currentChar = 'd';
 
+    // Read Text and find the first (, {, [, /* 
     for(int i = 0; i < test.length(); ++i)
     {
         currentChar = test[i];
-        
-        if(currentChar == ('('))
-            stackTest.push(currentChar);
-        
-        else if(currentChar == (')'))
-        {
+		
+		if (currentChar == ('(') || currentChar == ('{') 
+			|| currentChar == ('[') || currentChar == ('/') || currentChar == ('*'))
+				stackTest.push(currentChar);
+       if(currentChar == (')') || currentChar == ('}')
+			|| currentChar == (']') || currentChar == ('*') || currentChar == ('/'))
             if(!stackTest.empty() && ArePairs(stackTest.top()->data,currentChar))
-                stackTest.pop();
-        }
+				stackTest.pop();
     }
 
-    cout << stackTest.getSize() << endl;
-
-    if(stackTest.empty())
-        cout << "Your program is balanced" << endl;
-    else 
-        cout << "Your program is not balanced" << endl;
-        
+    cout << (stackTest.empty() ? "Your program is balanced" : "Your program is not balanced") << endl;
+    
+	cin.ignore();
     return 0;
 }   
 
-
+// Returns True if two chars are pairs
 bool ArePairs(char openingChar,char closingChar)
 {
     if(openingChar == ('(') && closingChar == (')')) return true;
-    return false;
+	if (openingChar == ('{') && closingChar == ('}')) return true;
+	if (openingChar == ('[') && closingChar == (']')) return true;
+	if (openingChar == ('/') && closingChar == ('/')) return true;
+	if (openingChar == ('*') && closingChar == ('*')) return true;
+	return false;
 }

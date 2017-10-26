@@ -1,10 +1,11 @@
-#include "iostream"
+#pragma once
+#include <iostream>
 
 using namespace std;
-    
+
+// Used an Linked List Iteration of a Stack
 class PairNode
 {
-    
 public:
     char data;
     PairNode *next;
@@ -19,11 +20,12 @@ public:
 
 class PairNodeStack
 {
-public:
-    
+	// Variables to store length and current head of the Stack
     int size;
     PairNode * head;
+public:
 
+	// Use to return a boolean value of whether the Stack is empty
     bool empty()
     { 
         size = getSize();
@@ -32,6 +34,7 @@ public:
         return false;
     }
     
+	// Use to return an integer value of the Stack's number of elements
     int getSize()
     {
         size = 0;
@@ -42,7 +45,7 @@ public:
             return size;
         }
 
-        PairNode *current = head;
+        auto current = head;
 
         while(current != 0)
         {
@@ -53,36 +56,38 @@ public:
         return size;
     }
     
+	// Use to return the PairNode at the current top of the Stack.
     PairNode *top()
     {
         if(this->getSize() == 0)
-            return NULL;
+            return nullptr;
 
-        PairNode *topOfStack = new PairNode;
+        auto *topOfStack = new PairNode;
         topOfStack->data = head->data;
         topOfStack->next = 0;
-        cout << "The Stack's current top : " << topOfStack->data << endl;
         return topOfStack;   
     }
     
+	// Use to delete the current top of the Stack
     void pop()
     {
-        if(head->next = 0)
-        {
-            head = 0;
-            delete head;
-            return;
-        }
+        if(!(head->next == nullptr))
+	    {
+		    PairNode* tmp = head;
+			head = head->next;
+		    delete tmp;
+		    return;
+	    }
 
-        PairNode *tmp = head->next;
-        delete head;
-        head = tmp;
-        
+	    head = nullptr;
+	    delete head;
+		cout << "Popped the last node in the stack. The stack is now empty" << endl;
     }
 
+	// Use to add an element to the top of the Stack
     void push(char d)
     {
-        PairNode *lastIn = new PairNode;
+        auto lastIn = new PairNode;
 
         lastIn->data = d;
         lastIn->next = head;
@@ -97,12 +102,11 @@ public:
     }
     ~PairNodeStack()
     {
-        PairNode *tmp;
         while(head != 0)
         {
-            tmp = head->next;
-            delete head; 
-            head = tmp;   
+			auto *tmp = head;
+            head = head->next;
+            delete tmp; 
         }
     }
 };
