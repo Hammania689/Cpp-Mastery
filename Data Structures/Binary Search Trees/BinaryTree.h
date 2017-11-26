@@ -5,6 +5,7 @@ using namespace std;
 
 struct PotusNode
 {
+
 	string lastName;
 	PotusNode *parent;
 	PotusNode *leftChild;
@@ -56,7 +57,7 @@ public:
 		PrintInOrder(recursiveRoot->leftChild);
 
 		// Print current node's value
-		cout << recursiveRoot->lastName << " ";
+		cout << recursiveRoot->lastName << " " << endl;
 			
 		// Traverse to the Right child
 		PrintInOrder(recursiveRoot->rightChild);
