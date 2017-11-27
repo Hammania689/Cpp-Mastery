@@ -5,7 +5,6 @@ using namespace std;
 
 struct PotusNode
 {
-
 	string lastName;
 	PotusNode *parent;
 	PotusNode *leftChild;
@@ -49,6 +48,8 @@ public:
 	// Use to Recursively Print Tree In Order ** Order of Nodes matter
 	PotusNode* PrintInOrder(PotusNode *recursiveRoot) const
 	{
+	
+
 		// If the recursive node is null
 		if (recursiveRoot == nullptr)
 			return nullptr;
